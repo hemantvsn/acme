@@ -1,15 +1,28 @@
 package com.hemant.acme.util;
 
-import java.awt.Point;
+import org.springframework.data.geo.Point;
 
 /**
  * http://www.ahristov.com/tutorial/geometry-games/point-line-distance.html
  * https://stackoverflow.com/questions/4438244/how-to-calculate-shortest-2d-distance-between-a-point-and-a-line-segment-in-all
  * 
+ * Assumption : Lat/Lon are spherical coordinates
+ * But assuming them as normal cartesian ones for use case
+ * 
  * @author hemant
- *
  */
 public class DistanceUtils {
+	/**
+	 * 	Latitude is the Y axis, longitude is the X axis.
+	 * @param geoPoint
+	 * @return
+	 */
+	public Point getAWTPointFromGeoJsonPoint(com.hemant.acme.model.geojson.Point geoPoint) {
+		double x = geoPoint.getCoordinates()[0];
+		double y = geoPoint.getCoordinates()[1];
+		Point p = new Point(x, y);
+		return p;
+	}
 
 	/**
 	 * Slope of the line will be same y2-y1/x2-x1 = y3-y1/x3-x1
@@ -20,8 +33,8 @@ public class DistanceUtils {
 	 * @return
 	 */
 	public boolean doesPointPLiesOnLineAB(Point A, Point B, Point P) {
-		double slopeAB = (A.y - B.y) / (A.x - B.x);
-		double slopeAP = (A.y - P.y) / (A.x - P.x);
+		double slopeAB = (A.getY() - B.getY()) / (A.getX() - B.getX());
+		double slopeAP = (A.getY() - P.getY()) / (A.getX() - P.getX());
 
 		/*
 		 * compare 2 doubles
@@ -39,8 +52,8 @@ public class DistanceUtils {
 	 * @return
 	 */
 	public double pointToLineDistance(Point A, Point B, Point P) {
-		double normalLength = Math.sqrt((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));
-		return Math.abs((P.x - A.x) * (B.y - A.y) - (P.y - A.y) * (B.x - A.x)) / normalLength;
+		double normalLength = Math.sqrt((B.getX() - A.getX()) * (B.getX() - A.getX()) + (B.getY() - A.getY()) * (B.getY() - A.getY()));
+		return Math.abs((P.getX() - A.getX()) * (B.getY() - A.getY()) - (P.getY() - A.getY()) * (B.getX() - A.getX())) / normalLength;
 	}
 
 }
