@@ -1,5 +1,7 @@
 package com.hemant.acme.model.geojson;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("Point")
@@ -35,4 +37,10 @@ public class Point extends Geometry {
 		this.coordinates = coordinates;
 	}
 
+	@Override
+	public String toString() {
+		return "Point [coordinates=" + Arrays.toString(coordinates) + "]";
+	}
+
+	
 }

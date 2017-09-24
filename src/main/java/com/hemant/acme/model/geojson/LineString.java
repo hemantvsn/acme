@@ -39,4 +39,8 @@ public class LineString extends Geometry {
 		this.coordinates = coordinates;
 	}
 
+	@Override
+	public String toString() {
+		return "LineString [coordinates=" + coordinates + "]";
+	}
 }
