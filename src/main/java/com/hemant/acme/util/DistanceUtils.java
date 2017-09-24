@@ -17,7 +17,7 @@ public class DistanceUtils {
 	 * @param geoPoint
 	 * @return
 	 */
-	public Point getAWTPointFromGeoJsonPoint(com.hemant.acme.model.geojson.Point geoPoint) {
+	public static Point getXYPointFromGeoJsonPoint(com.hemant.acme.model.geojson.Point geoPoint) {
 		double x = geoPoint.getCoordinates()[0];
 		double y = geoPoint.getCoordinates()[1];
 		Point p = new Point(x, y);
@@ -32,7 +32,7 @@ public class DistanceUtils {
 	 * @param X
 	 * @return
 	 */
-	public boolean doesPointPLiesOnLineAB(Point A, Point B, Point P) {
+	public static boolean doesPointPLiesOnLineAB(Point A, Point B, Point P) {
 		double slopeAB = (A.getY() - B.getY()) / (A.getX() - B.getX());
 		double slopeAP = (A.getY() - P.getY()) / (A.getX() - P.getX());
 
@@ -40,7 +40,7 @@ public class DistanceUtils {
 		 * compare 2 doubles
 		 * https://stackoverflow.com/questions/8081827/how-to-compare-two-double-values-in-java
 		 */
-		return (Math.abs(slopeAB - slopeAP) <= 0.001) ? true : false;
+		return (Math.abs(slopeAB - slopeAP) <= 0.000001) ? true : false;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class DistanceUtils {
 	 * @param P
 	 * @return
 	 */
-	public double pointToLineDistance(Point A, Point B, Point P) {
+	public static double pointToLineDistance(Point A, Point B, Point P) {
 		double normalLength = Math.sqrt((B.getX() - A.getX()) * (B.getX() - A.getX()) + (B.getY() - A.getY()) * (B.getY() - A.getY()));
 		return Math.abs((P.getX() - A.getX()) * (B.getY() - A.getY()) - (P.getY() - A.getY()) * (B.getX() - A.getX())) / normalLength;
 	}
