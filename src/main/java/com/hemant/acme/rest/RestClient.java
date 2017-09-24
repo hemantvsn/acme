@@ -1,6 +1,7 @@
 package com.hemant.acme.rest;
 
 import java.util.Date;
+import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import com.hemant.acme.dao.JourneyDAOImpl;
 import com.hemant.acme.model.Journey;
 import com.hemant.acme.model.Movement;
 import com.hemant.acme.model.Truck;
+import com.hemant.acme.model.geojson.Point;
 
 /**
  * Mock implementation of the restclient which will be used
@@ -54,7 +56,16 @@ public class RestClient {
 		Movement movement = new Movement();
 		movement.setTruckId(truck.getId());
 		movement.setCreatedOn(new Date());
-		movement.setLocation(currentJourney.getRandomPointInJourney());
+		
+		double random = new Random().nextDouble();
+		LOG.info("****We have decided to add an offset of :{} to both lat and lon****", random);
+		
+		Point p = currentJourney.getRandomPointInJourney();
+		double[] coordinates = p.getCoordinates();
+		for (int i = 0; i < coordinates.length; i++) {
+			coordinates[i] = coordinates[i] + random;
+		}
+		movement.setLocation(p);
 		movement.setId(new ObjectId().toString());
 		return movement;
 	}
