@@ -52,7 +52,10 @@ public class PointInTimeDataHandler {
 		LOG.info("The truck is adrift from the route by :{}", minDistance);
 		if (minDistance > minThreshold) {
 			alertGenerator.generateAlert(pointInTimeData, truck, minDistance);
+		} else {
+			LOG.info("No alert has to be generated");
 		}
+		
 	}
 	
 	private double getMinimumDistanceFromRoute(Movement pointInTimeData, Truck truck) {
