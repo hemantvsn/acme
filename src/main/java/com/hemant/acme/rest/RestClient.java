@@ -48,6 +48,7 @@ public class RestClient {
 	 * @return
 	 */
 	private Movement getMovementDetailsFromAPI(Truck truck) {
+		LOG.info("fetching movement data of truck :{}", truck);
 		Journey currentJourney = journeyDAO.getJourney(truck.getCurrentJourneyId());
 		
 		Movement movement = new Movement();
